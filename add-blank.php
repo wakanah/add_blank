@@ -13,7 +13,10 @@ function add_blank($content){
 	print_r($atags);
 	foreach ($atags as $atag) {
 		if(preg_match('/https?\:\/\//',$atag) && !strpos($atag,$_SERVER["HTTP_HOST"])){
-			$content = str_replace($atag,'外部リンク',$content);
+			if (!preg_match('/target.+blank"/', $atag)) {
+				$atag2 = preg_replace('/(?<!a)\>/','target="_blank">',$atag);
+				$content = str_replace($atag, $atag2, $content);
+			}
 		}
 	}
 	return $content;
