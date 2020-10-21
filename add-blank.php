@@ -8,7 +8,9 @@ Author: Wakana Hashimoto
 add_filter('the_content','add_blank');
 
 function add_blank($content){
-	// preg_match_all('/<a')
+	preg_match_all('/<a.+\/a>/u',$content,$atag);
+	$atag = $atag[0];
+	print_r($atag);
 	$content = preg_replace('/<a.+\/a>/','リンク',$content);
 	return $content;
 }
