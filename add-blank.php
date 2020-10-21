@@ -7,15 +7,13 @@ Author: Wakana Hashimoto
 
 class add_blank{
 
-	protected $name;
-	function __construct($n){
-		$this->name = $n;
-		add_filter('the_content', 'add_blank');
+	function __construct(){
+		add_filter('the_content',array( $this, 'add_blank' ));
 	}
 	function add_blank($content){
 		preg_match_all('/<a.+\/a>/u',$content,$atags);
 		$atags = $atags[0];
-		print_r($atags);
+		// print_r($atags);
 		foreach ($atags as $atag) {
 			if(preg_match('/https?\:\/\//',$atag) && !strpos($atag,$_SERVER["HTTP_HOST"])){
 				if (!preg_match('/target.+blank"/', $atag)) {
